@@ -16,7 +16,7 @@ interface IRoute extends RouteProps {
 
 function PrivateRoute(props: IRoute): JSX.Element {
   const { component: Component, ...rest } = props;
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   return (
     <Route
       {...rest}
@@ -29,7 +29,7 @@ function PrivateRoute(props: IRoute): JSX.Element {
 
 function SignRoute(props: IRoute): JSX.Element {
   const { component: Component, ...rest } = props;
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   return (
     <Route
       {...rest}
