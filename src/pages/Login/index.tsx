@@ -1,6 +1,7 @@
 import { Field, ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
+import { Redirect, useHistory } from 'react-router';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux';
 
 interface Values {
   email: string;
@@ -9,7 +10,12 @@ interface Values {
 }
 
 function Login(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  // const history = useHistory();
+
+  // if (isAuthenticated) {
+  //   return <Redirect to="/admin" />;
+  // }
 
   const schema = Yup.object({
     email: Yup.string()
@@ -28,10 +34,12 @@ function Login(): JSX.Element {
   });
 
   const handleSubmit = (values: Values, helpers: FormikHelpers<Values>) => {
+    const { email, password } = values;
     dispatch({
       type: 'SIGN_IN_REQUEST',
-      payload: values
+      payload: { email, password }
     });
+    // history.push('/admin');
   };
 
   return (

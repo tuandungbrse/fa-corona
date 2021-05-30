@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import Login from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
+import { useAppSelector } from '../redux';
 
 interface IRoute extends RouteProps {
   component:
@@ -16,7 +17,7 @@ interface IRoute extends RouteProps {
 
 function PrivateRoute(props: IRoute): JSX.Element {
   const { component: Component, ...rest } = props;
-  const isAuthenticated = false;
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   return (
     <Route
       {...rest}
@@ -29,7 +30,7 @@ function PrivateRoute(props: IRoute): JSX.Element {
 
 function SignRoute(props: IRoute): JSX.Element {
   const { component: Component, ...rest } = props;
-  const isAuthenticated = false;
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   return (
     <Route
       {...rest}

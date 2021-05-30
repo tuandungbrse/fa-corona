@@ -1,5 +1,6 @@
 interface Auth {
   id: string;
+  isAuthenticated: boolean;
   email: string;
   password?: string;
   token?: string;
@@ -7,18 +8,22 @@ interface Auth {
 
 const initialState: Auth = {
   id: '',
-  email: ''
+  email: '',
+  isAuthenticated: false
 };
 
+//@ts-ignore
 const reducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   if (type === 'SIGN_IN') {
-    return {
+    const s = {
       ...state,
-      id: payload.id,
-      email: payload.email
+      ...payload,
+      isAuthenticated: true
     };
+    console.log(s);
+    return s;
   }
 
   if (type === 'SIGN_OUT') {
