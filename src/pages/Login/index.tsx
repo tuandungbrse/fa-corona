@@ -1,5 +1,6 @@
 import { Field, ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 
 interface Values {
   email: string;
@@ -8,6 +9,8 @@ interface Values {
 }
 
 function Login(): JSX.Element {
+  const dispatch = useDispatch();
+
   const schema = Yup.object({
     email: Yup.string()
       .email('Must be a valid email')
@@ -24,14 +27,21 @@ function Login(): JSX.Element {
       })
   });
 
+  const handleSubmit = (values: Values, helpers: FormikHelpers<Values>) => {
+    dispatch({
+      type: 'SIGN_IN_REQUEST',
+      payload: values
+    });
+  };
+
   return (
     <div className="container p-5">
       <Formik
         initialValues={{ email: '', password: '', confirmPassword: '' }}
         validationSchema={schema}
-        onSubmit={(values: Values, helpers: FormikHelpers<Values>) => {}}
+        onSubmit={handleSubmit}
       >
-        <Form className="needs-validation" noValidate>
+        <Form noValidate>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
               Email address
